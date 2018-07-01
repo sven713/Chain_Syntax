@@ -16,7 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor orangeColor];
+    self.view.backgroundColor = [BViewController randomColor];
+    
 }
 
 
@@ -24,10 +25,27 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)dismissBlock:(void(^)(NSString *someStr))dismissCallBack {
-    if (dismissCallBack) {
-        NSString *disMissStr = [NSString stringWithFormat:@"消失的是啥:%@",NSStringFromClass([self class])];
-        dismissCallBack(disMissStr);
+
+- (void)showBlock:(void(^)(UIColor *viewColor))callBack {
+    if (callBack) {
+        callBack(self.view.backgroundColor);
     }
 }
+
++(UIColor *) randomColor{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //0.0 to 1.0
+    
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  // 0.5 to 1.0,away from white
+    
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //0.5 to 1.0,away from black
+    
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+-(void)setColorBlock:(void (^)(UIColor *))colorBlock{
+    if (colorBlock) {
+        colorBlock(self.view.backgroundColor);
+    }
+}
+
 @end

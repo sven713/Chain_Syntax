@@ -11,7 +11,7 @@
 #import "BViewController.h"
 
 @interface ViewController ()
-
+@property (nonatomic, strong) UIButton *btn;
 @end
 
 @implementation ViewController
@@ -25,14 +25,24 @@
     
     NSLog(@"运算结果-%d",result);
     
+    
+    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    self.btn.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.btn];
 }
 
-//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    BViewController *vc = [[BViewController alloc] init];
-//    [self presentViewController:vc animated:YES completion:nil];
-//    [vc dismissBlock:^(NSString *someStr) {
-//        NSLog(@"说的啥?%@",someStr);
-//    }];
-//}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    BViewController *vc = [[BViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+    
+    __weak typeof(self)weakSelf = self;
+    [vc showBlock:^(UIColor *viewColor) {
+        weakSelf.btn.backgroundColor = viewColor;
+    }];
+    
+//    vc.colorBlock = ^(UIColor *bgColor){
+//        weakSelf.btn.backgroundColor = bgColor;
+//    };
+}
 
 @end

@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface BViewController : UIViewController
--(void)dismissBlock:(void(^)(NSString *someStr))dismissCallBack;
+
+- (void)showBlock:(void(^)(UIColor *viewColor))callBack;
+
+@property (nonatomic, copy) void(^colorBlock)(UIColor *color);
+
 @end
